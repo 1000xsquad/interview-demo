@@ -17,6 +17,7 @@
   "dependencies": {
     "antd": "^3.10.8",
     "connected-react-router": "4.5.0",
+    "moment": "^2.25.3",
     "react": "16.6.3",
     "react-dom": "16.6.3",
     "react-redux": "5.1.1",
