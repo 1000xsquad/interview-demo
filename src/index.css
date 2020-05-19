@@ -3,7 +3,34 @@
 html {
   font-size: 100%;
 }
-
+.white-div {
+  background: white;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.13)
+}
+.mt {
+  margin-top: 1em;
+}
+.pd {
+  padding: 1em;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.grid-2 > div > div {
+  margin-top: 1em;
+}
+.w-100 {
+  width: 100%;
+  margin:auto
+}
+.scroll {
+  overflow: auto;
+  max-height: 300px;
+  width: 95%;
+  margin:auto
+}
 body {
   margin: 0;
   padding: 0;
