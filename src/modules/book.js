@@ -14,12 +14,15 @@ export default (state = initialState, action) => {
         case DELETE_BOOK:
             state.splice(action.payload, 1)
             return [...state]
+        case UPDATE_BOOK:
+
+            return [...state, { editInfo: action.payload }]
 
         case UPDATE_BOOK_SUBMIT:
             state[action.payload.id] = {
-                ...state
+                ...action.payload
             }
-            return state
+            return [...state]
         default:
             return state
     }
@@ -46,8 +49,9 @@ export const update_book = (book, index) => dispatch => {
     })
 }
 
-export const update_book_submit = (book, index) => dispatch => {
+export const update_book_submit = (book) => dispatch => {
     dispatch({
-        type: UPDATE_BOOK_SUBMIT
+        type: UPDATE_BOOK_SUBMIT,
+        payload: book
     })
 }

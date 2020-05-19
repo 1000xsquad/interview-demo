@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from 'react-redux'
 import moment from "moment"
 import { Form, Input, Button, DatePicker, Row, Col } from "antd"
-import { add_book_fun } from '../../modules/book';
+import { add_book_fun, update_book_submit } from '../../modules/book';
 const dateFormat = 'YYYY/MM/DD';
 
 class FormAddBook extends React.Component {
@@ -13,22 +13,51 @@ class FormAddBook extends React.Component {
             date_end: new Date(),
             name_author: "",
             date_for_read: "",
-            imgUrl: ""
+            imgUrl: "",
+            id: undefined,
+            newSub: false
         }
 
 
     }
-
-    handleSubmit = (e) => {
-        e.preventDefault()
-        this.props.addBook(this.state)
+    clear = () => {
         this.setState({
+            ...this.state,
             name_book: "",
             date_end: new Date(),
             name_author: "",
             date_for_read: "",
-            imgUrl: ""
+            imgUrl: "",
+            id: undefined,
         })
+    }
+    componentWillReceiveProps(nextProps) {
+
+        nextProps.book.filter(b => b.editInfo).map(b => {
+            this.setState({
+                ...this.state,
+                name_book: b.editInfo.name_book,
+                date_end: new Date(b.editInfo.date_end),
+                name_author: b.editInfo.name_author,
+                date_for_read: b.editInfo.date_for_read,
+                imgUrl: b.editInfo.imgUrl,
+                id: b.editInfo.id
+            })
+
+        })
+
+
+    }
+    handleSubmit = (e) => {
+        e.preventDefault()
+        if (this.state.id !== undefined) {
+            this.props.update_submit(this.state)
+
+        } else {
+            this.props.addBook(this.state)
+
+        }
+
     }
 
     render() {
@@ -45,7 +74,7 @@ class FormAddBook extends React.Component {
                         >
                             <Input
 
-                                defaultValue={this.state.name_book}
+                                value={this.state.name_book}
                                 onChange={e => {
                                     const { value } = e.target
                                     this.setState({ ...this.state, name_book: value })
@@ -130,6 +159,11 @@ class FormAddBook extends React.Component {
                     className="w-100"
                 >
                     <Button type="primary" htmlType="submit">Submit</Button>
+                    <Button type="button" onClick={e => {
+                        e.preventDefault()
+                        this.clear()
+                    }} htmlType="submit">Clear Input</Button>
+
                 </Form.Item>
             </Form>
         )
@@ -138,7 +172,8 @@ class FormAddBook extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addBook: article => dispatch(add_book_fun(article))
+        addBook: book => dispatch(add_book_fun(book)),
+        update_submit: (book, index) => dispatch(update_book_submit(book, index))
     };
 }
 

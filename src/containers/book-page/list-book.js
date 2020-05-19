@@ -15,29 +15,29 @@ class ListBook extends React.Component {
             <div className="scroll">
                 <List
                     dataSource={this.props.books}
-                    renderItem={(item, ind) => (
-                        <List.Item key={ind}>
-                            <List.Item.Meta
-                                avatar={
-                                    <Avatar src={item.imgUrl} />
-                                }
-                                title={<a href="https://ant.design">{`ช่อหนังสือ: ${item.name_book}`}</a>}
-                                description={`แต่งโดย: ${item.name_author} เวลาที่อ่ารได้: ${item.date_for_read} อ่านได้ถึง: ${item.date_end}`}
-                            />
-                            <div>
+                    renderItem={(item, ind) => (!item.editInfo ? <List.Item key={ind}>
 
-                                <Icon type="edit" style={{ "cursor": "pointer", marginRight: "10px" }} onClick={e => {
-                                    e.preventDefault()
-                                    this.props.editFunc(item, ind)
-                                }} />
+                        <List.Item.Meta
+                            avatar={
+                                <Avatar src={item.imgUrl} />
+                            }
+                            title={<a href="https://ant.design">{`ช่อหนังสือ: ${item.name_book}`}</a>}
+                            description={`แต่งโดย: ${item.name_author} เวลาที่อ่ารได้: ${item.date_for_read} อ่านได้ถึง: ${item.date_end}`}
+                        />
+                        <div>
 
-                                <Icon style={{ "cursor": "pointer", marginRight: "10px" }} onClick={e => {
-                                    e.preventDefault()
-                                    this.deleteThisElement(ind)
-                                }} type="close" />
+                            <Icon type="edit" style={{ "cursor": "pointer", marginRight: "10px" }} onClick={e => {
+                                e.preventDefault()
+                                this.props.editFunc(item, ind)
+                            }} />
 
-                            </div>
-                        </List.Item>
+                            <Icon style={{ "cursor": "pointer", marginRight: "10px" }} onClick={e => {
+                                e.preventDefault()
+                                this.deleteThisElement(ind)
+                            }} type="close" />
+
+                        </div>
+                    </List.Item> : <></>
                     )}
                 >
 
